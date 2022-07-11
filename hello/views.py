@@ -12,8 +12,9 @@ def index(request):
 def p2(request):
     url = json.loads(request.body)['url']
     print(url)
+    print(request.body)
     with requests.get(url) as res:
-        return HttpResponse(res)
+        return HttpResponse(res, status = res.status_code)
 
 def db(request):
 
