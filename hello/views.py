@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http.response import StreamingHttpResponse
 from django.views.decorators.http import require_POST
-import requests
+import requests, json
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Greeting
@@ -24,7 +24,7 @@ def read_in_chunks(res_object, chunk_size=1024):
 @csrf_exempt
 @require_POST
 def p2(request):
-    with requests.get(request.POST['url'], stream = True) as res:
+    with requests.get(json.loads(request.body)['url'], stream = True) as res:
         return StreamingHttpResponse(read_in_chunks(res))
 
 def db(request):
